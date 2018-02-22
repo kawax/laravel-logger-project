@@ -32,7 +32,7 @@ return [
     'channels' => [
         'stack' => [
             'driver'   => 'stack',
-            'channels' => ['single', 'cwlogs'],
+            'channels' => ['single', 'cwlogs', 'chatwork'],
         ],
 
         'single' => [
@@ -75,8 +75,15 @@ return [
             'group'     => env('CWLOGS_GROUP'),
             'stream'    => env('CWLOGS_STREAM'),
             'retention' => env('CWLOGS_RETENTION', 14),
-            'level'     => 'debug',
+            'level'     => 'error',
+        ],
+
+        'chatwork' => [
+            'driver' => 'custom',
+            'via'    => Revolution\Laravel\Logger\ChatWork\ChatWorkLogger::class,
+            'token'  => env('CHATWORK_TOKEN'),
+            'room'   => env('CHATWORK_ROOM'),
+            'level'  => 'emergency',
         ],
     ],
-
 ];

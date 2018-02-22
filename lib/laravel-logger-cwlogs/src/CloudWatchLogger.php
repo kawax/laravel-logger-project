@@ -26,24 +26,16 @@ class CloudWatchLogger
 
         $client = new CloudWatchLogsClient($params);
 
-        $handler = new CloudWatch($client, $config['group'], $config['stream'], $config['retention']);
+        $handler = new CloudWatch(
+            $client,
+            $config['group'],
+            $config['stream'],
+            $config['retention'],
+            10000,
+            [],
+            $config['level']
+        );
 
-        return new Logger($this->parseChannel($config), [$handler]);
-    }
-
-    /**
-     * Extract the log channel from the given configuration.
-     *
-     * @param  array $config
-     *
-     * @return string
-     */
-    protected function parseChannel(array $config)
-    {
-        if (!isset($config['name'])) {
-            return app()->bound('env') ? app()->environment() : 'production';
-        }
-
-        return $config['name'];
+        return new Logger('cwlogs', [$handler]);
     }
 }

@@ -14,6 +14,7 @@
 Route::get('/', function () {
     logger()->debug('debug');
     logger()->error('error');
+    logger()->emergency('emergency');
 
     return view('welcome');
 });
